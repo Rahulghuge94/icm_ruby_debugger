@@ -1,0 +1,201 @@
+{
+  "name": "icm-ruby-debugger",
+  "displayName": "ICM Ruby Debugger",
+  "description": "Run and debug InfoWorks ICM Exchange Ruby scripts with debugger.rb from VS Code.",
+  "version": "0.1.0",
+  "author": {"name": "Rahul Ghuge"},
+  "publisher": "rahulghuge",
+  "license": "MIT",
+  "keywords": [
+    "infoworks",
+    "icm",
+    "ruby",
+    "debugger",
+    "iexchange"
+  ],
+  "engines": {
+    "vscode": "^1.86.0"
+  },
+  "categories": [
+    "Debuggers",
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:ruby",
+    "onDebugResolve:icm-ruby",
+    "onCommand:icmRubyDebugger.debugCurrentFile",
+    "onCommand:icmRubyDebugger.runCurrentFile",
+    "onCommand:icmRubyDebugger.selectExchangeExecutable"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "ruby",
+        "aliases": [
+          "Ruby",
+          "ruby"
+        ],
+        "extensions": [
+          ".rb",
+          ".rbw",
+          ".rake",
+          ".gemspec"
+        ],
+        "filenames": [
+          "Rakefile",
+          "Gemfile"
+        ]
+      }
+    ],
+    "breakpoints": [
+      {
+        "language": "ruby"
+      }
+    ],
+    "commands": [
+      {
+        "command": "icmRubyDebugger.debugCurrentFile",
+        "title": "ICM Ruby Debugger: Debug Current File",
+        "category": "ICM Ruby"
+      },
+      {
+        "command": "icmRubyDebugger.runCurrentFile",
+        "title": "ICM Ruby Debugger: Run Current File",
+        "category": "ICM Ruby"
+      },
+      {
+        "command": "icmRubyDebugger.selectExchangeExecutable",
+        "title": "ICM Ruby Debugger: Select Exchange Executable",
+        "category": "ICM Ruby"
+      }
+    ],
+    "configuration": {
+      "title": "ICM Ruby Debugger",
+      "properties": {
+        "icmRubyDebugger.exchangeExecutable": {
+          "type": "string",
+          "default": "",
+          "description": "Full path to ICMExchange.exe, IExchange.exe, or another InfoWorks Exchange executable."
+        },
+        "icmRubyDebugger.productCode": {
+          "type": "string",
+          "default": "/ICM",
+          "description": "Exchange product/incarnation argument. For InfoWorks ICM this is usually /ICM."
+        },
+        "icmRubyDebugger.scriptArgs": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "description": "Additional arguments passed to the Ruby script through Exchange."
+        },
+        "icmRubyDebugger.breakOnStart": {
+          "type": "boolean",
+          "default": false,
+          "description": "Open debugger.rb before the target script is loaded."
+        },
+        "icmRubyDebugger.searchRoots": {
+          "type": "array",
+          "default": [
+            "%ProgramFiles%",
+            "%ProgramFiles(x86)%",
+            "%ProgramFiles%\\\\Autodesk",
+            "%ProgramFiles(x86)%\\\\Autodesk"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "description": "Folders scanned when auto-detecting versioned InfoWorks ICM Exchange executables."
+        },
+        "icmRubyDebugger.terminalName": {
+          "type": "string",
+          "default": "ICM Exchange Debugger",
+          "description": "Integrated terminal name used by run and debug commands."
+        }
+      }
+    },
+    "menus": {
+      "editor/title": [
+        {
+          "command": "icmRubyDebugger.debugCurrentFile",
+          "when": "resourceLangId == ruby",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "icmRubyDebugger.debugCurrentFile",
+          "when": "resourceLangId == ruby",
+          "group": "navigation"
+        },
+        {
+          "command": "icmRubyDebugger.runCurrentFile",
+          "when": "resourceLangId == ruby",
+          "group": "navigation"
+        }
+      ]
+    },
+    "debuggers": [
+      {
+        "type": "icm-ruby",
+        "label": "InfoWorks ICM Ruby",
+        "languages": [
+          "ruby"
+        ],
+        "configurationAttributes": {
+          "launch": {
+            "required": [
+              "script"
+            ],
+            "properties": {
+              "script": {
+                "type": "string",
+                "description": "Ruby script to run through ICM Exchange.",
+                "default": "${file}"
+              },
+              "exchangeExecutable": {
+                "type": "string",
+                "description": "Full path to ICMExchange.exe, IExchange.exe, or another Exchange executable."
+              },
+              "productCode": {
+                "type": "string",
+                "description": "Exchange product/incarnation argument.",
+                "default": "/ICM"
+              },
+              "args": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Arguments passed after /ICM.",
+                "default": []
+              },
+              "breakOnStart": {
+                "type": "boolean",
+                "description": "Stop before loading the target Ruby script.",
+                "default": false
+              }
+            }
+          }
+        },
+        "initialConfigurations": [
+          {
+            "type": "icm-ruby",
+            "request": "launch",
+            "name": "Debug ICM Ruby Script",
+            "script": "${file}",
+            "productCode": "/ICM",
+            "args": [],
+            "breakOnStart": false
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "check": "node --check extension.js"
+  },
+  "devDependencies": {}
+}

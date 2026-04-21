@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "icm-ruby",
+      "request": "launch",
+      "name": "Debug ICM Ruby Script",
+      "script": "${file}",
+      "exchangeExecutable": "C:\\Program Files\\Innovyze Workgroup Client 2024.5\\iexchange.exe",
+      "productCode": "/ICM",
+      "args": [],
+      "breakOnStart": false
+    }
+  ]
+}
