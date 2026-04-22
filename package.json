@@ -3,9 +3,12 @@
   "displayName": "ICM Ruby Debugger",
   "description": "Run and debug InfoWorks ICM Exchange Ruby scripts with debugger.rb from VS Code.",
   "version": "0.1.0",
-  "author": {"name": "Rahul Ghuge"},
+  "author": {
+    "name": "Rahul Ghuge"
+  },
   "publisher": "rahulghuge",
   "license": "MIT",
+  "repository": "https://github.com/Rahulghuge94/icm_ruby_debugger",
   "keywords": [
     "infoworks",
     "icm",
@@ -196,6 +199,5 @@
   },
   "scripts": {
     "check": "node --check extension.js"
-  },
-  "devDependencies": {}
+  }
 }
